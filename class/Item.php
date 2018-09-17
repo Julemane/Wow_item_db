@@ -6,6 +6,7 @@ class Item{
       private $description;
       private $icon;
       private $dropId;
+      private $itemClass;
 
 
       function __construct($itemId){
@@ -13,6 +14,7 @@ class Item{
         $this->itemData = json_decode($apiReq, true);
         $this->name = $this->itemData['name'];
         $this->description = $this->itemData['description'];
+        $this->itemClass = $this->itemData['itemClass'];
 
       }
       //return all Item's data
@@ -26,6 +28,10 @@ class Item{
 
       public function getDescription(){
         return $this->description;
+      }
+
+      public function getItemClass(){
+        return $this->itemClass;
       }
 
 
