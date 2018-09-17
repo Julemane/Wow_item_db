@@ -9,9 +9,10 @@ $itemId = '18803';
 $data = file_get_contents('https://eu.api.battle.net/wow/item/18803?locale=fr_FR&apikey=ku2wn4dac3gcfeb7vjubk927g2bmsfn3');
 $item = json_decode($data);*/
 require_once('class/Item.php');
+require_once('class/JsonConnect.php');
 
 
-for($itemId = 1175; $itemId <= 1180; $itemId++){
+for($itemId = 1175; $itemId <= 1178; $itemId++){
 
   $item = new Item($itemId);
 

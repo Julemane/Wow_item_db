@@ -10,12 +10,13 @@ class Item{
 
 
       function __construct($itemId){
-        $apiReq = file_get_contents('https://eu.api.battle.net/wow/item/'.$itemId.'?locale=fr_FR&apikey=ku2wn4dac3gcfeb7vjubk927g2bmsfn3');
+        $jsonConnect = new JsonConnect();
+        $apiReq = $jsonConnect->getItem($itemId);
+
         $this->itemData = json_decode($apiReq, true);
         $this->name = $this->itemData['name'];
         $this->description = $this->itemData['description'];
         $this->itemClass = $this->itemData['itemClass'];
-
       }
       //return all Item's data
       public function getData(){
