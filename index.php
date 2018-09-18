@@ -12,16 +12,12 @@ require_once('class/Item.php');
 require_once('class/JsonConnect.php');
 
 
-for($itemId = 1175; $itemId <= 1178; $itemId++){
+for($itemId = 1175; $itemId <= 1185; $itemId++){
 
   $item = new Item($itemId);
-
   $itemName = $item->getItemName();
-  $itemClass =$item->getItemClass();
-
-
-  echo $itemId.' '.$itemName.' '.$itemClass.'</br>';
-
+  $itemClass = $item->getItemClass();
+  echo $itemId.' '.$itemName.'</br>';
 
 }
 
