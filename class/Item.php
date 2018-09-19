@@ -7,13 +7,16 @@ class Item{
       private $icon;
       private $dropId;
       private $itemClass;
+      public $itemUrl;
 
 
       function __construct($itemId){
         $jsonConnect = new JsonConnect();
         $apiReq = $jsonConnect->getItem($itemId);
+        $this->itemUrl = $apiReq['url'];
+        //var_dump($apiReq['url']);
 
-        $this->itemData = json_decode($apiReq, true);
+        $this->itemData = json_decode($apiReq['item'], true);
         $this->name = $this->itemData['name'];
         $this->description = $this->itemData['description'];
         $this->itemClass = $this->itemData['itemClass'];
@@ -34,9 +37,6 @@ class Item{
       public function getItemClass(){
         return $this->itemClass;
       }
-
-
-
 
 
 }
