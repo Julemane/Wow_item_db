@@ -1,15 +1,11 @@
 <?php
-
-/*$setLocal = '?locale=fr_FR&';
-$apiKey = 'ku2wn4dac3gcfeb7vjubk927g2bmsfn3';
-$urlBase = 'https://eu.api.battle.net';
-$class = '/wow/item/';
-$itemId = '18803';
-
-$data = file_get_contents('https://eu.api.battle.net/wow/item/18803?locale=fr_FR&apikey=ku2wn4dac3gcfeb7vjubk927g2bmsfn3');
-$item = json_decode($data);*/
 require_once('class/Item.php');
 require_once('class/JsonConnect.php');
+require_once('model/ItemsManager.php');
+
+$itemIdStart = 0;
+$itemIdEnd = 10;
+$itemError = 0;
 
 //Manage inexisting item'sIDs
  function parseHeaders($headers){
@@ -27,26 +23,31 @@ require_once('class/JsonConnect.php');
   return $head;
   }
 
-for($itemId = 1175; $itemId <= 1190; $itemId++){
+for($itemId = $itemIdStart; $itemId <= $itemIdEnd; $itemId++){
 
     $url = 'https://eu.api.battle.net/wow/item/'.$itemId.'?locale=fr_FR&apikey=ku2wn4dac3gcfeb7vjubk927g2bmsfn3';
     $headers = get_headers($url);
 
     $aHeader = parseHeaders($headers);
-    if ($aHeader['reponse_code']==404)
-      $test='erreur';
+    if ($aHeader['reponse_code']==404){
+      $itemError++;
+    }else{
+      $item = new Item($itemId);
+      $itemClass = $item->getItemClass();
 
-    else {
+      if($itemClass == 2 OR $itemClass == 4){
+        $itemName = $item->getItemName();
 
-    $item = new Item($itemId);
-    $itemName = $item->getItemName();
-    $itemClass = $item->getItemClass();
-    echo $itemId.' '.$itemName.'</br>';
+        $itemManager = new ItemsManager();
+        $affectedLines = $itemManager->fillDb($itemId, $itemName);
+      }else{
+        $itemError++;
+      }
     }
-
-
-
 }
+
+echo"Upload terminer de"." ".($itemId - $itemError)." "."Item(s)";
+
 
 
 
